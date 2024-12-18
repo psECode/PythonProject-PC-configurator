@@ -261,9 +261,9 @@ def choose_proccesors():
         procs = db_sess.query(Proccesor).filter(Proccesor.socket == plate.socket and int(plate.mgc.split()[1].strip()) >= Proccesor.mgc >= int(plate.mgc.split()[0].strip())).all()
         db_sess.close()
         return procs
-    if controlling_array[2] != 0:
-        power = db_sess.query(Power).filter(Power.uid == controlling_array[2]).first()
-        procs = db_sess.query(Proccesor).filter(power.socket.contains(Proccesor.socket)).all()
+    if controlling_array[5] != 0:
+        cooler = db_sess.query(Cooler).filter(Cooler.uid == controlling_array[5]).first()
+        procs = db_sess.query(Proccesor).filter(cooler.socket.contains(Proccesor.socket)).all()
         db_sess.close()
         return procs
     procs = db_sess.query(Proccesor).all()
