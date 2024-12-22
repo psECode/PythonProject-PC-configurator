@@ -2,7 +2,7 @@ from backend import db_session
 from backend.parsers import get_plates, get_graphic_cards, get_memory, get_power, get_proccesors, get_coolers, \
     get_shells
 from backend.models import Plate, GraphicCard, Memory, Power, Proccesor, Cooler, Shell
-from backend.db_session import controlling_array, global_init
+from backend.db_session import controlling_array
 
 
 def get_plates_to_db():
@@ -263,7 +263,7 @@ def choose_proccesors():
         return procs
     if controlling_array[5] != 0:
         cooler = db_sess.query(Cooler).filter(Cooler.uid == controlling_array[5]).first()
-        procs = db_sess.query(Proccesor).filter(cooler.socket.contains(Proccesor.socket)).all()
+        procs = [x for x in db_sess.query(Proccesor).all() if x.socket in cooler.sockets]
         db_sess.close()
         return procs
     procs = db_sess.query(Proccesor).all()
