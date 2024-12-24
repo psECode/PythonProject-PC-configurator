@@ -1,0 +1,286 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+
+    <title>Конфигуратор пк</title>
+
+</head>
+<body>
+    <h1> Последняя дата обновления базы данных: {{last_time_updated}}</h1>
+    <p> Обновить базу данных (запустится в фоновом режиме):</p>
+    <a href="/parse"> Обновить </a>
+    <br>
+    <br>
+    <br>
+    <div>
+        <h1>Материнская плата</h1>
+        {% if controlling_array[0] != 0 %}
+            <div>
+                <h2>Выбранная материнская плата:</h2>
+                <img src={{buff_storage.plate.img}} width="200" height="200">
+                <p>Название: {{buff_storage.plate.name}} <br>
+                Цуна: {{buff_storage.plate.price}} руб<br>
+                Форм-фактор: {{buff_storage.plate.form_factor}} <br>
+                Чипсет: {{buff_storage.plate.chipset}} <br>
+                Сокет: {{buff_storage.plate.socket}} <br>
+                Слоты: {{buff_storage.plate.slots}} <br>
+                Частота: {{buff_storage.plate.mgc.split()[0]}} - {{buff_storage.plate.mgc.split()[1]}}МГц <br>
+                </p>
+                <a href="/remove?thing=plate"> Удалить </a>
+            </div>
+        {% endif %}
+        <br>
+        <br>
+        <h1>Процессор</h1>
+        {% if controlling_array[4] != 0 %}<div>
+            <h2>Выбранный процессор:</h2>
+            <img src={{buff_storage.proccesor.img}} width="200" height="200">
+            <p>Название: {{buff_storage.proccesor.name}} <br>
+            Цена: {{buff_storage.proccesor.price}} руб<br>
+            Сокет: {{buff_storage.proccesor.socket}} <br>
+            Частота: {{buff_storage.proccesor.mgc}} МГц <br>
+            Количество ядер: {{buff_storage.proccesor.core_count}} <br>
+            Мощность: {{buff_storage.proccesor.power}} Вт <br>
+            </p>
+            <a href="/remove?thing=proccesor"> Удалить </a>
+        </div>{% endif %}
+        <br>
+        <br>
+        <h1>Оперативная память</h1>
+        {% if controlling_array[1] != 0 %}<div>
+            <h2>Выбранная оперативная память:</h2>
+            <img src={{buff_storage.memory.img}} width="200" height="200">
+            <p>Название: {{buff_storage.memory.name}} <br>
+            Цена: {{buff_storage.memory.price}} руб<br>
+            Частота: {{buff_storage.memory.mgc}} МГц <br>
+            DDR: {{buff_storage.memory.ddr}} <br>
+            </p>
+            <a href="/remove?thing=memory"> Удалить </a>
+        </div>{% endif %}
+        <br>
+        <br>
+        <h1>Блок питания</h1>
+        {% if controlling_array[2] != 0 %}<div>
+            <h2>Выбранный блок питания:</h2>
+            <img src={{buff_storage.power.img}} width="200" height="200">
+            <p>Название: {{buff_storage.power.name}} <br>
+            Цена: {{buff_storage.power.price}} руб<br>
+            Форм-фактор: {{buff_storage.power.form_factor}} <br>
+            Мощность: {{buff_storage.power.power}} Вт <br>
+            Пины: {{buff_storage.power.pins}} pins<br>
+            </p>
+            <a href="/remove?thing=power"> Удалить </a>
+        </div>{% endif %}
+        <br>
+        <br>
+        <h1>Корпуса</h1>
+        {% if controlling_array[3] != 0 %}<div>
+            <h2>Выбранный корпус:</h2>
+            <img src={{buff_storage.shell.img}} width="200" height="200">
+            <p>Название: {{buff_storage.shell.name}} <br>
+            Цена: {{buff_storage.shell.price}} руб<br>
+            Форм-факторы: {{buff_storage.shell.form_factor}} <br>
+            </p>
+            <a href="/remove?thing=shell"> Удалить </a>
+        </div>{% endif %}
+        <br>
+        <br>
+        <h1>Кулер</h1>
+        {% if controlling_array[5] != 0 %}<div>
+            <h2>Выбранный кулер:</h2>
+            <img src={{buff_storage.cooler.img}} width="200" height="200">
+            <p>Название: {{buff_storage.cooler.name}} <br>
+            Цена: {{buff_storage.cooler.price}} руб<br>
+            Сокеты: {{buff_storage.cooler.sockets}} <br>
+            Количество вентиляторов: {{buff_storage.cooler.vent_count}} <br>
+            Мощность: {{buff_storage.cooler.power}} Вт <br>
+            </p>
+            <a href="/remove?thing=cooler"> Удалить </a>
+        </div>{% endif %}
+        <br>
+        <br>
+        <h1>Графический процессор</h1>
+        {% if controlling_array[6] != 0 %}<div>
+            <h2>Выбранный графический процессор:</h2>
+            <img src={{buff_storage.graphic_card.img}} width="200" height="200">
+            <p>Название: {{buff_storage.graphic_card.name}} <br>
+            Цена: {{buff_storage.graphic_card.price}} руб<br>
+            Тип памяти: {{buff_storage.graphic_card.memory_type}} <br>
+            Размер памяти: {{buff_storage.graphic_card.memory}} Мб <br>
+            Разъемы: {{buff_storage.graphic_card.plugs}} <br>
+            Мощность: {{buff_storage.graphic_card.power}} Вт <br>
+            </p>
+            <a href="/remove?thing=graphic_card"> Удалить </a>
+        </div>{% endif %}
+    </div>
+    <br>
+    <br>
+    <h2> Цена текущей сборки: {{sum}} руб</h2>
+    <br>
+    <br>
+    <h3> Материнские платы </h3>
+    <div class="fixed-element">
+        {% if controlling_array[0] == 0 %}
+        {% for item in buff_storage.plates %}
+        <div class="content">
+            <img src={{item.img}} width="100" height="100">
+            <p>Название: {{item.name}} <br>
+            Цена: {{item.price}} руб<br>
+            Форм-фактор: {{item.form_factor}} <br>
+            Чипсет: {{item.chipset}} <br>
+            Сокет: {{item.socket}} <br>
+            Слоты: {{item.slots}} <br>
+            Частота: {{item.mgc.split()[0]}} - {{item.mgc.split()[1]}}МГц <br>
+            </p>
+            <a href="/get?thing=plate&uid={{item.uid}}"> Выбрать </a>
+        </div>
+        {% endfor %}
+        {% else %}
+        <p> Вы уже выбрали материнскую плату</p>
+        {% endif %}
+    </div>
+    <br>
+    <br>
+    <h3> Оперативная память </h3>
+    <div class="fixed-element">
+        {% if controlling_array[1] == 0 %}
+        {% for item in buff_storage.memories %}
+        <div class="content">
+            <img src={{item.img}} width="100" height="100">
+            <p>Название: {{item.name}} <br>
+            Цена: {{item.price}} руб<br>
+            Тип: {{item.type}} <br>
+            Частота: {{item.mgc}} МГц <br>
+            DDR: {{item.ddr}} <br>
+            </p>
+            <a href="/get?thing=memory&uid={{item.uid}}"> Выбрать </a>
+        </div>
+        {% endfor %}
+        {% else %}
+        <p> Вы уже выбрали оперативную память</p>
+        {% endif %}
+    </div>
+    <br>
+    <br>
+    <h3> Блоки питания </h3>
+    <div class="fixed-element">
+        {% if controlling_array[2] == 0 %}
+        {% for item in buff_storage.powers %}
+        <div class="content">
+            <img src={{item.img}} width="100" height="100">
+            <p>Название: {{item.name}} <br>
+            Цена: {{item.price}} руб<br>
+            Форм-фактор: {{item.form_factor}} <br>
+            Мощность: {{item.power}} Вт <br>
+            Пины: {{item.pins}} pins<br>
+            </p>
+            <a href="/get?thing=power&uid={{item.uid}}"> Выбрать </a>
+        </div>
+        {% endfor %}
+        {% else %}
+        <p> Вы уже выбрали блок питания</p>
+        {% endif %}
+    </div>
+    <br>
+    <br>
+    <h3> Корпуса </h3>
+    <div class="fixed-element">
+        {% if controlling_array[3] == 0 %}
+        {% for item in buff_storage.shells %}
+        <div class="content">
+            <img src={{item.img}} width="100" height="100">
+            <p>Название: {{item.name}} <br>
+            Цена: {{item.price}} руб<br>
+            Форм-факторы: {{item.form_factor}} <br>
+            </p>
+            <a href="/get?thing=shell&uid={{item.uid}}"> Выбрать </a>
+        </div>
+        {% endfor %}
+        {% else %}
+        <p> Вы уже выбрали корпус</p>
+        {% endif %}
+    </div>
+    <br>
+    <br>
+    <h3> Процессоры </h3>
+    <div class="fixed-element">
+        {% if controlling_array[4] == 0 %}
+        {% for item in buff_storage.proccesors %}
+        <div class="content">
+            <img src={{item.img}} width="100" height="100">
+            <p>Название: {{item.name}} <br>
+            Цена: {{item.price}} руб<br>
+            Сокет: {{item.socket}} <br>
+            Частота: {{item.mgc}} МГц <br>
+            Количество ядер: {{item.core_count}} <br>
+            Потребление: {{item.power}} Вт <br>
+            </p>
+            <a href="/get?thing=proccesor&uid={{item.uid}}"> Выбрать </a>
+        </div>
+        {% endfor %}
+        {% else %}
+        <p> Вы уже выбрали процессор</p>
+        {% endif %}
+    </div>
+    <br>
+    <br>
+    <h3> Кулеры </h3>
+    <div class="fixed-element">
+        {% if controlling_array[5] == 0 %}
+        {% for item in buff_storage.coolers %}
+        <div class="content">
+            <img src={{item.img}} width="100" height="100">
+            <p>Название: {{item.name}} <br>
+            Цена: {{item.price}} руб<br>
+            Потребление: {{item.power}} Вт <br>
+            Сокеты: {{item.sockets}} <br>
+            Количество вентиляторов: {{item.vent_count}} <br>
+            </p>
+            <a href="/get?thing=cooler&uid={{item.uid}}"> Выбрать </a>
+        </div>
+        {% endfor %}
+        {% else %}
+        <p> Вы уже выбрали кулер</p>
+        {% endif %}
+    </div>
+    <br>
+    <br>
+    <h3> Видеокарты </h3>
+    <div class="fixed-element">
+        {% if controlling_array[6] == 0 %}
+        {% for item in buff_storage.graphic_cards %}
+        <div class="content">
+            <img src={{item.img}} width="100" height="100">
+            <p>Название: {{item.name}} <br>
+            Цена: {{item.price}} руб<br>
+            Потребление: {{item.power}} Вт <br>
+            Тип памяти: {{item.form_factor}} <br>
+            Количество памяти: {{item.memory}} Гб <br>
+            Разъемы: {{item.plugs}} <br>
+            </p>
+            <a href="/get?thing=graphic_card&uid={{item.uid}}"> Выбрать </a>
+        </div>
+        {% endfor %}
+        {% else %}
+        <p> Вы уже выбрали видеокарту</p>
+        {% endif %}
+    </div>
+</body>
+</html>
+
+<style>
+
+.fixed-element {
+  border: 2px solid black;
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  max-height: 600px;
+  overflow-y: auto;
+}
+
+.content {
+  width: 400px;
+}
+</style>
